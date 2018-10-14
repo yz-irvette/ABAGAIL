@@ -18,8 +18,8 @@ import java.text.*;
  * Branched from AbaloneTest.java
  */
 public class MNISTTest {
-	// CHANGE_ME: should the absolute path of your project location + "src/opt/test/"
-	private static String filepath = "F:/Workspace/RandomizedOptimization/src/opt/test/";
+	// CHANGE_ME: should the absolute path of your project location + "src/opt/test/" if using eclipse
+	private static String filepath = "src/opt/test/";  // "F:/Workspace/RandomizedOptimization/src/opt/test/";
     private static Instance[] instances = initializeInstances(filepath + "mnist_train_images",
     		                                                  filepath + "mnist_train_labels");
     private static Instance[] instancesTest = initializeInstances(filepath + "mnist_test_images",
