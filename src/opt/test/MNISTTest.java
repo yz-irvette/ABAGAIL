@@ -55,7 +55,7 @@ public class MNISTTest {
 
         for(int i = 0; i < oa.length; i++) {
             System.out.println("\n--------------------------- " + oaNames[i] + " ---------------------------");
-            double start = System.nanoTime(), end, trainingTime, testingTime, correct = 0, incorrect = 0;
+            double start = System.nanoTime(), end, trainingTime, testingTime, correct = 0, incorrect = 0, correct2 = 0, incorrect2 = 0;
             train(oa[i], networks[i], oaNames[i]); //trainer.train();
             end = System.nanoTime();
             trainingTime = end - start;
@@ -69,7 +69,16 @@ public class MNISTTest {
             for(int j = 0; j < instancesTest.length; j++) {
                 networks[i].setInputValues(instancesTest[j].getData());
                 networks[i].run();
-
+                for (int k = 0; k < 10; k++) {
+                	if (instancesTest[j].getLabel().getDiscrete(k) == 1) {
+                		if (networks[i].getOutputLayer().getGreatestActivationIndex() == k) {
+                			correct2++;
+                		} else {
+                			incorrect2++;
+                		}
+                		break;
+                	}
+                }
                 for (int k = 0; k < 10; k++) {
                 	if (Math.abs(instancesTest[j].getLabel().getContinuous(k) - networks[i].getOutputValues().get(k)) <= 0.5) {
                 		correct++;
@@ -82,8 +91,8 @@ public class MNISTTest {
             testingTime = end - start;
             testingTime /= Math.pow(10,9);
 
-            results +=  "\nResults for " + oaNames[i] + ": \nCorrectly classified " + correct/10 + " instances." +
-                        "\nIncorrectly classified " + incorrect/10 + " instances.\nPercent correctly classified: "
+            results +=  "\nResults for " + oaNames[i] + ": \nCorrectly classified " + correct/10.0 + ", " + correct2 + " instances." +
+                        "\nIncorrectly classified " + incorrect/10.0 + ", " + incorrect2 + " instances.\nPercent correctly classified: "
                         + df.format(correct/(correct+incorrect)*100) + "%\nTraining time: " + df.format(trainingTime)
                         + " seconds\nTesting time: " + df.format(testingTime) + " seconds\n";
             System.out.println(results);
@@ -106,7 +115,9 @@ public class MNISTTest {
                 error += measure.value(output, example);
             }
 
-            System.out.println(df.format(error));
+            if (i % 20 == 0) {
+            	System.out.println("Round " + i + ": " + df.format(error));
+            }
         }
     }
 
