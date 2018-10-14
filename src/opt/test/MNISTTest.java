@@ -111,7 +111,7 @@ public class MNISTTest {
                 network.run();
 
                 Instance output = instances[j].getLabel(), example = new Instance(network.getOutputValues());
-                example.setLabel(new Instance(Double.parseDouble(network.getOutputValues().toString())));
+                example.setLabel(new Instance(network.getOutputValues()));
                 error += measure.value(output, example);
             }
 
