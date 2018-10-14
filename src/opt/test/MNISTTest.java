@@ -28,7 +28,7 @@ public class MNISTTest {
     private static int inputLayer = 28*28, hiddenLayer = 28, outputLayer = 10, trainingIterations = 1000;
     private static BackPropagationNetworkFactory factory = new BackPropagationNetworkFactory();
     
-    private static ErrorMeasure measure = new SumOfSquaresError();
+    private static ErrorMeasure measure = new SumOfWeightedSquaresError();
 
     private static DataSet set = new DataSet(instances);
 
