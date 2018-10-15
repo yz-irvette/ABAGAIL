@@ -51,7 +51,7 @@ public class MNISTTest {
 
         oa[0] = new RandomizedHillClimbing(nnop[0]);
         oa[1] = new SimulatedAnnealing(1E11, .95, nnop[1]);
-        oa[2] = new StandardGeneticAlgorithm(200, 100, 10, nnop[2]);
+        oa[2] = new StandardGeneticAlgorithm(20, 10, 1, nnop[2]);
 
         for(int i = 0; i < oa.length; i++) {
             System.out.println("\n--------------------------- " + oaNames[i] + " ---------------------------");
