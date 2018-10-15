@@ -35,17 +35,17 @@ import shared.FixedIterationTrainer;
  */
 public class NQueensTest {
     /** The n value */
-    private static final int N = 10;
+    private static final int N = 20;
     /** The t value */
     
-    public static void main(String[] args) {
-        int[] ranges = new int[N];
-        Random random = new Random(N);
-        for (int i = 0; i < N; i++) {
+    public void SingleTest(int n) {
+        int[] ranges = new int[n];
+        Random random = new Random(n);
+        for (int i = 0; i < n; i++) {
         	ranges[i] = random.nextInt();
         }
         NQueensFitnessFunction ef = new NQueensFitnessFunction();
-        Distribution odd = new DiscretePermutationDistribution(N);
+        Distribution odd = new DiscretePermutationDistribution(n);
         NeighborFunction nf = new SwapNeighbor();
         MutationFunction mf = new SwapMutation();
         CrossoverFunction cf = new SingleCrossOver();
@@ -96,5 +96,12 @@ public class NQueensTest {
         System.out.println("MIMIC: Board Position: ");
         //System.out.println(ef.boardPositions());
         System.out.println("Time : "+ (System.currentTimeMillis() - starttime));
+    }
+
+    public static void main(String[] args) {
+        for (int n = 1; n <= N; n ++) {
+        	System.out.println("============================   n=" + n + "   ============================");
+        	new NQueensTest().SingleTest(n);
+        }
     }
 }

@@ -39,32 +39,29 @@ import shared.FixedIterationTrainer;
  */
 public class MaxKColoringTest {
     /** The n value */
-    private static final int N = 50; // number of vertices
-    private static final int L =4; // L adjacent nodes per vertex
-    private static final int K = 8; // K possible colors
+    private static final int N = 100;	// N maximum number of vertices
+    private static final int L = 4;	// L maximum adjacent nodes per vertex
+    private static final int K = 8; 	// K maximum possible colors
+    
     /**
      * The test main
      * @param args ignored
      */
-    public static void main(String[] args) {
-        Random random = new Random(N*L);
+    public void SingleTest(int n, int l, int k) {
+    	Random random = new Random(n*l);
         // create the random velocity
-        Vertex[] vertices = new Vertex[N];
-        for (int i = 0; i < N; i++) {
+        Vertex[] vertices = new Vertex[n];
+        for (int i = 0; i < n; i++) {
             Vertex vertex = new Vertex();
             vertices[i] = vertex;	
-            vertex.setAdjMatrixSize(L);
-            for(int j = 0; j <L; j++ ){
-            	 vertex.getAadjacencyColorMatrix().add(random.nextInt(N*L));
+            vertex.setAdjMatrixSize(l);
+            for(int j = 0; j <l; j++ ){
+            	 vertex.getAadjacencyColorMatrix().add(random.nextInt(n*l));
             }
         }
-        /*for (int i = 0; i < N; i++) {
-            Vertex vertex = vertices[i];
-            System.out.println(Arrays.toString(vertex.getAadjacencyColorMatrix().toArray()));
-        }*/
         // for rhc, sa, and ga we use a permutation based encoding
         MaxKColorFitnessFunction ef = new MaxKColorFitnessFunction(vertices);
-        Distribution odd = new DiscretePermutationDistribution(K);
+        Distribution odd = new DiscretePermutationDistribution(k);
         NeighborFunction nf = new SwapNeighbor();
         MutationFunction mf = new SwapMutation();
         CrossoverFunction cf = new SingleCrossOver();
@@ -111,6 +108,14 @@ public class MaxKColoringTest {
         System.out.println("MIMIC: " + ef.value(mimic.getOptimal()));  
         System.out.println(ef.foundConflict());
         System.out.println("Time : "+ (System.currentTimeMillis() - starttime));
-        
+    }
+
+    public static void main(String[] args) {
+        for (int n = 5; n <= N; n +=5) {
+//        	for (int l = 2; l < L && l < n; l++) {
+//        		for (int k = l + 1; k < K && k < n; k++) {
+        			System.out.println("n=" + n);
+        			new MaxKColoringTest().SingleTest(n, L, K);
+        }
     }
 }
